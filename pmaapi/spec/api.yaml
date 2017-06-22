@@ -1,0 +1,30 @@
+# API Specification. #
+
+swagger: '2.0'
+info:
+  title: PMA API
+  version: '0.1'
+  x-package: pmaapi  #- Ideally root of all operationId's.
+  x-resource-dir: resources  #- Ideally sub-root of all operationId's.
+paths:
+  /indicators:
+    get:
+      #- Ideally inferred: 'x-package.x-resource-dir.<path>.<method>'.
+      operationId: pmaapi.resources.indicators.get
+      summary: Returns indicators.
+      responses:
+        200:
+          description: Successful response.
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: A list of indicators.
+# // get
+# // put
+# // post
+# // delete
+# // options
+# // head
+# // patch
