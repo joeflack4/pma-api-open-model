@@ -1,12 +1,12 @@
 """Module for resource."""
-from pmaapi.resource import Resource
 import os
+from pmaapi.resource import Resource
 
 
 MODULE_NAME = os.path.basename(__file__)[:-3]
 RESOURCE_INFO = {
-    'name': MODULE_NAME,
-    'plural': MODULE_NAME + 's'
+    'name': MODULE_NAME[:-1],
+    'plural': MODULE_NAME
 }
 RESOURCE = Resource(RESOURCE_INFO)
 
@@ -16,6 +16,7 @@ def get():
 
     Returns:
         dict: The resource.
+
     """
     return RESOURCE.get()
 
@@ -25,6 +26,7 @@ def put():
 
     Returns:
         dict: Response message.
+
     """
     return RESOURCE.put()
 
@@ -34,6 +36,7 @@ def post():
 
     Returns:
         dict: Response message.
+
     """
     return RESOURCE.post()
 
@@ -43,6 +46,7 @@ def delete():
 
     Returns:
         dict: Response message.
+
     """
     return RESOURCE.delete()
 
@@ -52,6 +56,7 @@ def options():
 
     Returns:
         dict: Response message.
+
     """
     return RESOURCE.options()
 
@@ -61,6 +66,7 @@ def head():
 
     Returns:
         dict: Response message.
+
     """
     return RESOURCE.head()
 
@@ -70,5 +76,6 @@ def patch():
 
     Returns:
         dict: Response message.
+
     """
     return RESOURCE.patch()

@@ -3,6 +3,7 @@
 
 class Resource:
     """Resource class."""
+
     def __init__(self, resource_info):
         """Resource initialization.
 
@@ -17,6 +18,7 @@ class Resource:
 
         Returns:
             dict: The resource.
+
         """
         return {self.plural: ['item1', 'item2', '...']}
 
@@ -26,6 +28,7 @@ class Resource:
 
         Returns:
             dict: Response message.
+
         """
         return {"message": "Method currently unsupported."}
 
@@ -35,6 +38,7 @@ class Resource:
 
         Returns:
             dict: Response message.
+
         """
         return {"message": "Method currently unsupported."}
 
@@ -44,6 +48,7 @@ class Resource:
 
         Returns:
             dict: Response message.
+
         """
         return {"message": "Method currently unsupported."}
 
@@ -53,6 +58,7 @@ class Resource:
 
         Returns:
             dict: Response message.
+
         """
         return {"message": "Method currently unsupported."}
 
@@ -62,6 +68,7 @@ class Resource:
 
         Returns:
             dict: Response message.
+
         """
         return {"message": "Method currently unsupported."}
 
@@ -71,5 +78,6 @@ class Resource:
 
         Returns:
             dict: Response message.
+
         """
         return {"message": "Method currently unsupported."}

@@ -7,6 +7,7 @@ def configuration():
 
     Returns:
         FlaskApp: Configured Flask application.
+
     """
     # Ideally has: connexion.App(__name__, swagger_ui='docs')
     app = connexion.App(__name__, specification_dir='spec/')
@@ -20,7 +21,8 @@ def run(app):
     Args:
         app (FlaskApp): Configured Flask application.
 
-    Side effects: app.run()
+    Side effects:
+        app.run()
     """
     app.run(port=8080)
 
