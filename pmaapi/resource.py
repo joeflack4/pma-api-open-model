@@ -9,6 +9,7 @@ class Resource:
 
         Args:
             resource_info (dict): Information about the resource.
+
         """
         self.name = resource_info['name']
         self.plural = resource_info['plural']
@@ -16,11 +17,16 @@ class Resource:
     def get(self):
         """HTTP GET method for resource.
 
+        >>> from pmaapi.resource import Resource
+        >>> Resource(resource_info={'name': 'a', 'plural': 'b'}).get()
+        {'b': ['item1', 'item2', '...']}
+
         Returns:
             dict: The resource.
-
         """
-        return {self.plural: ['item1', 'item2', '...']}
+        return {
+            self.plural: ['item1', 'item2', '...']
+        }
 
     @staticmethod
     def put():

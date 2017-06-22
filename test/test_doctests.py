@@ -7,5 +7,5 @@ TEST_DIRECTORY = os_path.dirname(os_path.realpath(__file__))
 
 if __name__ == '__main__':
     import doctest
-    file = TEST_DIRECTORY + "/../" + "pmaapi/resource.py"
-    doctest.testfile(filename=file, module_relative=False)
+    FILE = TEST_DIRECTORY + "/../" + "pmaapi/resource.py"
+    doctest.testfile(filename=FILE, module_relative=False)
