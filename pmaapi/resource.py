@@ -23,6 +23,7 @@ class Resource:
 
         Returns:
             dict: The resource.
+
         """
         return {
             self.plural: ['item1', 'item2', '...']
