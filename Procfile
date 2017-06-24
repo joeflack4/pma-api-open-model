@@ -1,1 +1,2 @@
-gunicorn pmaapi.__main__:APP
+gunicorn pmaapi:app
+# gunicorn pmaapi.__main__:APP
