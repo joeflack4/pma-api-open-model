@@ -1,4 +1,15 @@
-"""Entry point for package."""
+"""Entry point for package.
+
+Some options for running:
+ * gunicorn pmaapi.__main__:APP
+ * gunicorn -b 0.0.0.0:<port> pmaapi.__main__:APP
+    - port: Valid 4-digit port number, e.g. '8080'.
+ * connexion run pmaapi/api.yaml -v
+    - Assume app is structured such that this file is named 'api.py' and
+      resides in same directory with 'api.yaml'.
+ * <python> -m pmaapi
+        - python: Your interpreter, e.g. python, python3, etc.
+"""
 import connexion
 
 
@@ -10,22 +21,24 @@ def configuration():
 
     """
     # Ideally has: connexion.App(__name__, swagger_ui='docs')
-    app = connexion.App(__name__, specification_dir='spec/')
-    app.add_api('api.yaml')
-    return app
+    flask_connexion_app = connexion.App(__name__, specification_dir='spec/')
+    flask_connexion_app.add_api('api.yaml')
+    return flask_connexion_app
 
 
-def run(app):
+def run(server):
     """Run app.
 
     Args:
-        app (FlaskApp): Configured Flask application.
+        server (FlaskApp): Configured Flask application.
 
     Side effects:
-        app.run()
+        server.run()
     """
-    app.run(port=8080)
+    server.run(port=8000, debug=True)
 
+
+APP = configuration()
 
 if __name__ == '__main__':
     run(configuration())
