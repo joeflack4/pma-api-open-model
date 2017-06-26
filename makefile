@@ -41,7 +41,7 @@ test:
 	${PYTHON} -m unittest discover -v
 
 server:
-    gunicorn pmaapi.__main__:APP
+	gunicorn pmaapi.__main__:APP
 
 serve:
-    gunicorn pmaapi.__main__:APP
+	gunicorn pmaapi.__main__:APP
