@@ -21,6 +21,110 @@ paths:
               message:
                 type: string
                 description: A list of indicators.
+  /definitions:
+    get:
+      operationId: pmaapi.resources.definitions.get
+      summary: Returns definitions.
+      responses:
+        200:
+          description: Successful response.
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: A list of definitions.
+  /data:
+    get:
+      operationId: pmaapi.resources.data.get
+      summary: Returns data.
+      responses:
+        200:
+          description: Successful response.
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: A list of data.
+  /characteristics:
+    get:
+      operationId: pmaapi.resources.characteristics.get
+      summary: Returns characteristics.
+      responses:
+        200:
+          description: Successful response.
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: A list of characteristics.
+  /characteristic_groups:
+    get:
+      operationId: pmaapi.resources.characteristic_groups.get
+      summary: Returns characteristic_groups.
+      responses:
+        200:
+          description: Successful response.
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: A list of characteristic_groups.
+  /surveys:
+    get:
+      operationId: pmaapi.resources.surveys.get
+      summary: Returns surveys.
+      responses:
+        200:
+          description: Successful response.
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: A list of surveys.
+  /geographies:
+    get:
+      operationId: pmaapi.resources.geographies.get
+      summary: Returns geographies.
+      responses:
+        200:
+          description: Successful response.
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: A list of geographies.
+  /translations:
+    get:
+      operationId: pmaapi.resources.translations.get
+      summary: Returns translations.
+      responses:
+        200:
+          description: Successful response.
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: A list of translations.
+  /tags:
+    get:
+      operationId: pmaapi.resources.tags.get
+      summary: Returns tags.
+      responses:
+        200:
+          description: Successful response.
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: A list of tags.
 # // get
 # // put
 # // post
