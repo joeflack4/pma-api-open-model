@@ -4,7 +4,7 @@ ENV_PYTHON=python3
 TEST_DIR=test/
 SRC=pmaapi/
 
-.PHONY: lint tags ltags test flint go_lint go_code go_doc
+.PHONY: lint tags ltags test flint go_lint go_code go_doc server serve
 
 lint:
 	${PYTHON} -m pylint --output-format=colorized --reports=n ${SRC} && \
@@ -39,3 +39,9 @@ ltags:
 
 test:
 	${PYTHON} -m unittest discover -v
+
+server:
+    gunicorn pmaapi.__main__:APP
+
+serve:
+    gunicorn pmaapi.__main__:APP
