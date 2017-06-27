@@ -17,7 +17,7 @@ class Resource:
     def get(self):
         """HTTP GET method for resource.
 
-        >>> from pmaapi.resource import Resource
+        >>> from pmaapi.api.resource import Resource
         >>> Resource(resource_info={'name': 'a', 'plural': 'b'}).get()
         {'b': ['item1', 'item2', '...']}
 

@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """Unit tests for PPP package."""
-import unittest
 import doctest
-import os
+import unittest
 from argparse import ArgumentParser
-from pmaapi.resource import Resource
+
+import os
 
 TEST_PACKAGES = ['pmaapi', 'test']
 TEST_DIR = os.path.dirname(os.path.realpath(__file__)) + '/'

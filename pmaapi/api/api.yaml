@@ -6,6 +6,18 @@ info:
   version: '0.1'
   x-package: pmaapi  #- Ideally root of all operationId's.
   x-resource-dir: resources  #- Ideally sub-root of all operationId's.
+x-models:
+  <relations>: Pre-processed.
+  MODEL:
+    permissions: R* W* U* D* [*|#]
+    description: Placeholder.
+    <relations>: Pre-processed.
+    fields:
+      FIELD:
+        type: VARCHAR 100~ [<type> <limit>]
+        permissions: R* W* U* D* [*|#]
+        key: [''|PK|FK:<model>]
+        description: Placeholder.
 paths:
   /indicators:
     get:
@@ -125,7 +137,6 @@ paths:
               message:
                 type: string
                 description: A list of tags.
-# // get
 # // put
 # // post
 # // delete

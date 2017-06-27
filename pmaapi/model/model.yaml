@@ -1,0 +1,136 @@
+# Model Specification. #
+
+open-model: '0.1'
+
+info:
+  title: PMA API
+  version: '0.1'
+
+config:
+  description: |
+    Placeholder.
+  defaults:
+    description: |
+      Placeholder.
+    permissions:
+      description: |
+        Placeholder.
+      create: 1000
+      read: 1000
+      update: 1000
+      delete: 1000
+
+<relations>:
+  description: |
+    Placeholder.
+  <relation>: Pre-processed.
+
+models:
+  characteristic_groups:
+    permissions: R* W* U* D* [*|#]
+    description: |
+      Placeholder.
+    <relations>: Pre-processed.
+    fields:
+      FIELD:
+        type: VARCHAR 100~ [<type> <limit>]
+        permissions: R* W* U* D* [*|#]
+        key: [''|PK|FK:<model>]
+        description: |
+          Placeholder.
+  characteristics:
+    permissions: R* W* U* D* [*|#]
+    description: |
+      Placeholder.
+    <relations>: Pre-processed.
+    fields:
+      FIELD:
+        type: VARCHAR 100~ [<type> <limit>]
+        permissions: R* W* U* D* [*|#]
+        key: [''|PK|FK:<model>]
+        description: |
+          Placeholder.
+  data:
+    permissions: R* W* U* D* [*|#]
+    description: |
+      Placeholder.
+    <relations>: Pre-processed.
+    fields:
+      FIELD:
+        type: VARCHAR 100~ [<type> <limit>]
+        permissions: R* W* U* D* [*|#]
+        key: [''|PK|FK:<model>]
+        description: |
+         Placeholder.
+  definitions:
+    permissions: R* W* U* D* [*|#]
+    description: |
+      Placeholder.
+    <relations>: Pre-processed.
+    fields:
+      FIELD:
+        type: VARCHAR 100~ [<type> <limit>]
+        permissions: R* W* U* D* [*|#]
+        key: [''|PK|FK:<model>]
+        description: |
+         Placeholder.
+  geographies:
+    permissions: R* W* U* D* [*|#]
+    description: |
+      Placeholder.
+    <relations>: Pre-processed.
+    fields:
+      FIELD:
+        type: VARCHAR 100~ [<type> <limit>]
+        permissions: R* W* U* D* [*|#]
+        key: [''|PK|FK:<model>]
+        description: |
+          Placeholder.
+  indicators:
+    permissions: R* W* U* D* [*|#]
+    description: |
+      Placeholder.
+    <relations>: Pre-processed.
+    fields:
+      FIELD:
+        type: VARCHAR 100~ [<type> <limit>]
+        permissions: R* W* U* D* [*|#]
+        key: [''|PK|FK:<model>]
+        description: |
+          Placeholder.
+  surveys:
+    permissions: R* W* U* D* [*|#]
+    description: |
+      Placeholder.
+    <relations>: Pre-processed.
+    fields:
+      FIELD:
+        type: VARCHAR 100~ [<type> <limit>]
+        permissions: R* W* U* D* [*|#]
+        key: [''|PK|FK:<model>]
+        description: |
+         Placeholder.
+  tags:
+    permissions: R* W* U* D* [*|#]
+    description: |
+      Placeholder.
+    <relations>: Pre-processed.
+    fields:
+      FIELD:
+        type: VARCHAR 100~ [<type> <limit>]
+        permissions: R* W* U* D* [*|#]
+        key: [''|PK|FK:<model>]
+        description: |
+          Placeholder.
+  translations:
+    permissions: R* W* U* D* [*|#]
+    description: |
+      Placeholder.
+    <relations>: Pre-processed.
+    fields:
+      FIELD:
+        type: VARCHAR 100~ [<type> <limit>]
+        permissions: R* W* U* D* [*|#]
+        key: [''|PK|FK:<model>]
+        description: |
+          Placeholder.
