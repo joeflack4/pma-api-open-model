@@ -33,19 +33,6 @@ paths:
               message:
                 type: string
                 description: A list of indicators.
-  /definitions:
-    get:
-      operationId: pmaapi.resources.definitions.get
-      summary: Returns definitions.
-      responses:
-        200:
-          description: Successful response.
-          schema:
-            type: object
-            properties:
-              message:
-                type: string
-                description: A list of definitions.
   /data:
     get:
       operationId: pmaapi.resources.data.get
