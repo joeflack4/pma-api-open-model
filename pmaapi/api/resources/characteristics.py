@@ -1,6 +1,5 @@
 """Module for resource."""
 import os
-
 from pmaapi.api.resource import Resource
 
 MODULE_NAME = os.path.basename(__file__)[:-3]
