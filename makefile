@@ -57,7 +57,7 @@ serve:server
 server:
 	gunicorn pmaapi.__main__:APP
 
-
+# Ad Hoc Tests
 model: model_to_sqlalchemy
-model_to_sqlalchemy
-    ${PYTHON} -m pmaapi.api.open_model_to_sqlalchemy
+model_to_sqlalchemy:
+	${PYTHON} -m pmaapi.api.open_model_to_sqlalchemy
