@@ -1,0 +1,185 @@
+open-model: '0.1'
+
+info:
+  title: Human Resources Model Set
+  version: '0.1'
+  description: This is an example of a model set for human resources.
+
+roles:
+  default:  # These can be overridden.
+    description: These are default permissions for a user role if any specific
+      default permissions for that role have not been specified.
+    default_permissions:
+      user_management:  # Maximum value of signed binary 32-bit integers used.
+        create: 2,147,483,647
+        read: 2,147,483,647
+        update: 2,147,483,647
+        delete: 2,147,483,647
+      database:
+        create: False
+        read: False
+        update: False
+        delete: False
+      models:
+        create: False
+        read: False
+        update: False
+        delete: False
+      fields:
+        create: False
+        read: False
+        update: False
+        delete: False
+  owner:
+    description: This is a super user.
+    default_permissions:
+      user_management:
+        create: 0
+        read: 0
+        update: 0
+        delete: 0
+      database:
+        create: True
+        read: True
+        update: True
+        delete: True
+      models:
+        create: True
+        read: True
+        update: True
+        delete: True
+      fields:
+        create: True
+        read: True
+        update: True
+        delete: True
+  super_user: @this.sibling(owner)  # Symbol for relative inheritance and path syntax.
+    description: This is a super user.
+    # default_permissions: @this.class.sibling(owner[this.key])  # Relative
+    # default_permissions: /roles/owner[this.key] # Absolute
+    default_permissions:
+      user_management:  # This part is overridden.
+        create: 1
+        read: 1
+        update: 1
+        delete: 1
+  admin: ''
+  user: ''
+  guest: ''
+
+users:
+  default:  # These can be overridden.
+    description: These are default permissions for a user if any specific
+      default permissions for that user have not been specified.
+    default_permissions:
+      database:
+        create: False
+        read: False
+        update: False
+        delete: False
+      user_management:
+        create: False
+        read: False
+        update: False
+        delete: False
+      models:
+        create: False
+        read: False
+        update: False
+        delete: False
+      fields:
+        create: False
+        read: False
+        update: False
+        delete: False
+  super_user:
+    description: This is a super user.
+    default_permissions:
+      database:
+        create: True
+        read: True
+        update: True
+        delete: True
+      user_management:
+        create: True
+        read: True
+        update: True
+        delete: True
+      models:
+        create: True
+        read: True
+        update: True
+        delete: True
+      fields:
+        create: True
+        read: True
+        update: True
+        delete: True
+  admin: ''
+  user: ''
+  guest: ''
+
+config:  # TODO: Database configuration.
+  <example_option>: ''
+
+abstractModels:  # TODO
+  resource:
+    description: Placeholder
+    fields:
+      id:
+        type: LONG
+        permissions: ''
+        key: PK
+        index: True
+        autoIncrement: True
+      createdOn:
+        type: 'VARCHAR 100~ [<type> <limit>]'
+        permissions: ''
+        key: '[""|PK|FK:<model>]'
+        description: Placeholder
+        index: True
+      createdBy:
+        type: 'VARCHAR 100~ [<type> <limit>]'
+        permissions: ''
+        key: '[""|PK|FK:<model>]'
+        description: Placeholder
+        index: True
+      updatedOn:
+        type: 'VARCHAR 100~ [<type> <limit>]'
+        permissions: ''
+        key: '[""|PK|FK:<model>]'
+        description: Placeholder
+        index: True
+      updatedBy:
+        type: 'VARCHAR 100~ [<type> <limit>]'
+        permissions: ''
+        key: '[""|PK|FK:<model>]'
+        description: Placeholder
+        index: True
+
+models:
+  employees:
+    permissions:
+      role:
+        admin:
+        create: True
+        read: True
+        update: True
+        delete: True
+      user:
+       admin:
+        create: True
+        read: True
+        update: True
+        delete: True
+    description: This is an example description of model.
+    relations:
+      <example_relation>: Pre-processed. # TODO: WIP.
+    fields:
+      <example_field>:
+        type: VARCHAR
+        size_max: 100
+        size_min: 1
+        key: '[""|PK|FK:<model>]'
+        description: This is an example description of field.
+        index: True
