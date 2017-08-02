@@ -10,7 +10,7 @@ info:
   version: '0.1'
   description: This is an example description of model set.
 
-config:
+config:  # TODO
   description: Placeholder
   defaults:
     description: Placeholder
