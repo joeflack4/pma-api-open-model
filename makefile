@@ -60,4 +60,4 @@ server:
 # Ad Hoc Tests
 model: model_to_sqlalchemy
 model_to_sqlalchemy:
-	${PYTHON} -m pmaapi.api.open_model_to_sqlalchemy
+	${PYTHON} -m pmaapi.api.open_model_py.open_model_py

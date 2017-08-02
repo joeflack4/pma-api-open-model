@@ -5,7 +5,7 @@ import yaml
 from sys import stderr
 from copy import copy
 from pmaapi.config import MODEL_FILE, SUPPORTED_FILE_TYPES
-from pmaapi.api.open_model_to_sqlalchemy.definitions.error \
+from pmaapi.api.open_model_py.open_model_py.definitions.error \
     import UnexpectedException, UnsupportedFileTypeException
 
 
