@@ -1,63 +1,63 @@
-SRC=pmaapi/
+PYTHON=./env/bin/python3
+SRC=pmix/
+TEST=test/
 
-PYTHON_JKP=./env/bin/python3
-PYTHON_JEF=python3
-TEST_DIR=test/
+.PHONY: lint tags ltags test all lint_all codestyle docstyle server serve lint_src lint_test doctest doc code linters_all code_src code_test doc_src doc_test
 
+# Batched Commands
+all: linters_all test_all
+lint: lint_src code_src doc_src
+linters_all: doc code lint_all
 
-.PHONY: lint tags ltags test flint lint_all codestyle docstyle server serve lint_src lint_test fest doctest docfest
-
-lint:
-	${PYTHON_JKP} -m pylint --output-format=colorized --reports=n ${SRC} && \
-	${PYTHON_JKP} -m pycodestyle ${SRC} && \
-	${PYTHON_JKP} -m pydocstyle ${SRC}
-
-flint:
-	${PYTHON_JEF} -m pylint --output-format=colorized --reports=n ${SRC} && \
-	${PYTHON_JEF} -m pycodestyle ${SRC} && \
-	${PYTHON_JEF} -m pydocstyle ${SRC} && \
-	${PYTHON_JEF} -m pylint --output-format=colorized --reports=n ${TEST_DIR} && \
-	${PYTHON_JEF} -m pycodestyle ${TEST_DIR} && \
-	${PYTHON_JEF} -m pydocstyle ${TEST_DIR}
-
-lint_all:
-	${PYTHON_JEF} -m pylint --output-format=colorized --reports=n ${SRC} && \
-	${PYTHON_JEF} -m pylint --output-format=colorized --reports=n ${TEST_DIR}
-
+# Pylint Only
+lint_all: lint_src lint_test
 lint_src:
-	${PYTHON_JEF} -m pylint --output-format=colorized --reports=n ${SRC}
-
+	${PYTHON} -m pylint --output-format=colorized --reports=n ${SRC}
 lint_test:
-	${PYTHON_JEF} -m pylint --output-format=colorized --reports=n ${TEST_DIR}
+	${PYTHON} -m pylint --output-format=colorized --reports=n ${TEST}
 
-codestyle:
-	${PYTHON_JEF} -m pycodestyle ${SRC} && \
-	${PYTHON_JEF} -m pycodestyle ${TEST_DIR}
+# PyCodeStyle Only
+codestyle: codestyle_src codestyle_test
+code_src: codestyle_src
+code_test: codestyle_test
+code: codestyle
+codestyle_src:
+	${PYTHON} -m pycodestyle ${SRC}
+codestyle_test:
+	${PYTHON} -m pycodestyle ${TEST}
 
-docstyle:
-	${PYTHON_JEF} -m pydocstyle ${SRC} && \
-	${PYTHON_JEF} -m pydocstyle ${TEST_DIR}
+# PyDocStyle Only
+docstyle: docstyle_src docstyle_test
+doc_src: docstyle_src
+doc_test: docstyle_test
+doc: docstyle
+docstyle_src:
+	${PYTHON} -m pydocstyle ${SRC}
+docstyle_test:
+	${PYTHON} -m pydocstyle ${TEST}
 
+# Text Editor Commands
 tags:
 	ctags -R --python-kinds=-i .
-
 ltags:
 	ctags -R --python-kinds=-i ./${SRC}
 
+
+# Testing
+test_all: unittest doctest
+unittest: test
 test:
-	${PYTHON_JKP} -m unittest discover -v
-
-fest:
-	${PYTHON_JEF} -m unittest discover -v
-
+	${PYTHON} -m unittest discover -v
 doctest:
-	${PYTHON_JEF} -m test.test_ppp --doctests-only
+	${PYTHON} -m test.test_ppp --doctests-only
 
-docfest:
-	${PYTHON_JEF} -m test.test_ppp --doctests-only
 
+# Server Commands
+serve:server
 server:
 	gunicorn pmaapi.__main__:APP
 
-serve:
-	gunicorn pmaapi.__main__:APP
+
+model: model_to_sqlalchemy
+model_to_sqlalchemy
+    ${PYTHON} -m pmaapi.api.open_model_to_sqlalchemy
