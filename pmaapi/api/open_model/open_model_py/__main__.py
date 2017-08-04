@@ -24,13 +24,12 @@ class OpenModel:
         Arguments:
             source_data (dict): Source data in Python dictionary serialization.
         """
-        if not source_data:
-            self.data, self.source_data, self.source, self.source_file_data, \
-                self.source_file_path, self.dict, self.yaml, self.sqlalchemy, \
-                self.open_model_version, self.config, self.info, self.models, \
-                self.abstract_models, self.relations, self.custom_fields\
-                = iter_repeat(None, 15)
-        else:
+        self.data, self.source_data, self.source, self.source_file_data, \
+            self.source_file_path, self.dict, self.yaml, self.sqlalchemy, \
+            self.open_model_version, self.config, self.info, self.models, \
+            self.abstract_models, self.relations, self.custom_fields\
+            = iter_repeat(None, 15)
+        if source_data:
             self.load(source_data)
 
     def __iter__(self):
