@@ -1,4 +1,4 @@
-open-model: '0.1'  # Version to be opened as.
+open-model: '0.1.0'  # Version to be opened as.
 
 <example_info>:  # General description of model set to be rendered.
   title: Human Resources Model Set
