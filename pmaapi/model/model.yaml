@@ -1,5 +1,5 @@
 # Model Specification. #
-open-model: '0.1'
+open-model: '0.1.0'
 
 info:
   title: PMA API
