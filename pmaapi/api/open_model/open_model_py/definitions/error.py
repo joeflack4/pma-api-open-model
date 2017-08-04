@@ -6,8 +6,8 @@ class OpenModelException(Exception):
     pass
 
 
-class UnexpectedException(OpenModelException):
-    """For exceptions that are unknown unknowns."""
+class UnexpectedDataTypeException(OpenModelException):
+    """If data type was unexpected."""
     pass
 
 
