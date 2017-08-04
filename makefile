@@ -1,40 +1,63 @@
 PYTHON=./env/bin/python3
-GLOBAL_PYTHON=python3
-TEST_DIR=test/
 SRC=pmix/
+TEST=test/
 
-.PHONY: lint tags ltags test flint go_lint go_code go_doc
+.PHONY: lint tags ltags test all lint_all codestyle docstyle server serve lint_src lint_test doctest doc code linters_all code_src code_test doc_src doc_test
 
-lint:
-	${PYTHON} -m pylint --output-format=colorized --reports=n ${SRC} && \
-	${PYTHON} -m pycodestyle ${SRC} && \
+# Batched Commands
+all: linters_all test_all
+lint: lint_src code_src doc_src
+linters_all: doc code lint_all
+
+# Pylint Only
+lint_all: lint_src lint_test
+lint_src:
+	${PYTHON} -m pylint --output-format=colorized --reports=n ${SRC}
+lint_test:
+	${PYTHON} -m pylint --output-format=colorized --reports=n ${TEST}
+
+# PyCodeStyle Only
+codestyle: codestyle_src codestyle_test
+code_src: codestyle_src
+code_test: codestyle_test
+code: codestyle
+codestyle_src:
+	${PYTHON} -m pycodestyle ${SRC}
+codestyle_test:
+	${PYTHON} -m pycodestyle ${TEST}
+
+# PyDocStyle Only
+docstyle: docstyle_src docstyle_test
+doc_src: docstyle_src
+doc_test: docstyle_test
+doc: docstyle
+docstyle_src:
 	${PYTHON} -m pydocstyle ${SRC}
+docstyle_test:
+	${PYTHON} -m pydocstyle ${TEST}
 
-flint:
-	${GLOBAL_PYTHON} -m pylint --output-format=colorized --reports=n ${SRC} && \
-	${GLOBAL_PYTHON} -m pycodestyle ${SRC} && \
-	${GLOBAL_PYTHON} -m pydocstyle ${SRC} && \
-	${GLOBAL_PYTHON} -m pylint --output-format=colorized --reports=n ${TEST_DIR} && \
-	${GLOBAL_PYTHON} -m pycodestyle ${TEST_DIR} && \
-	${GLOBAL_PYTHON} -m pydocstyle ${TEST_DIR}
-
-go_lint:
-	${GLOBAL_PYTHON} -m pylint --output-format=colorized --reports=n ${SRC} && \
-	${GLOBAL_PYTHON} -m pylint --output-format=colorized --reports=n ${TEST_DIR}
-
-go_code:
-	${GLOBAL_PYTHON} -m pycodestyle ${SRC} && \
-	${GLOBAL_PYTHON} -m pycodestyle ${TEST_DIR}
-
-go_doc:
-	${GLOBAL_PYTHON} -m pydocstyle ${SRC} && \
-	${GLOBAL_PYTHON} -m pydocstyle ${TEST_DIR}
-
+# Text Editor Commands
 tags:
 	ctags -R --python-kinds=-i .
-
 ltags:
 	ctags -R --python-kinds=-i ./${SRC}
 
+
+# Testing
+test_all: unittest doctest
+unittest: test
 test:
 	${PYTHON} -m unittest discover -v
+doctest:
+	${PYTHON} -m test.test_ppp --doctests-only
+
+
+# Server Commands
+serve:server
+server:
+	gunicorn pmaapi.__main__:APP
+
+# Ad Hoc Tests
+model: model_to_sqlalchemy
+model_to_sqlalchemy:
+	${PYTHON} -m pmaapi.api.open_model.open_model_py

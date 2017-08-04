@@ -1,0 +1,96 @@
+open-model: '0.1.0'  # Version to be opened as.
+
+<example_info>:  # General description of model set to be rendered.
+  title: Human Resources Model Set
+  version: '0.1'
+  description: This is an example description of model set.
+
+info:
+  title: PMA API
+  version: '0.1'
+  description: This is an example description of model set.
+
+config:  # TODO
+  description: Placeholder
+  defaults:
+    description: Placeholder
+    permissions:
+      description: Placeholder
+      create: 1000
+      read: 1000
+      update: 1000
+      delete: 1000
+
+<relations>:
+  description: Placeholder
+  <relation>: Preprocessed
+
+abstractModels:
+  resource:
+    description: Placeholder
+    fields:
+      id:
+        type: LONG
+        permissions: ''
+        key: PK
+        index: True
+        autoIncrement: True
+      createdOn:
+        type: 'VARCHAR 100~ [<type> <limit>]'
+        permissions: ''
+        key: '[""|PK|FK:<model>]'
+        description: Placeholder
+        index: True
+      createdBy:
+        type: 'VARCHAR 100~ [<type> <limit>]'
+        permissions: ''
+        key: '[""|PK|FK:<model>]'
+        description: Placeholder
+        index: True
+      updatedOn:
+        type: 'VARCHAR 100~ [<type> <limit>]'
+        permissions: ''
+        key: '[""|PK|FK:<model>]'
+        description: Placeholder
+        index: True
+      updatedBy:
+        type: 'VARCHAR 100~ [<type> <limit>]'
+        permissions: ''
+        key: '[""|PK|FK:<model>]'
+        description: Placeholder
+        index: True
+
+models:
+  <example_model>:
+    user_permissions:
+     <example_user>:  # TODO: WIP.
+      read: True
+      write: True
+      update: True
+      delete: False
+    description: This is an example description of model.
+    relations:
+      <example_relation>: Pre-processed. # TODO: WIP.
+    fields:
+      <example_field>:
+        type: 'VARCHAR'
+        size_max: 100
+        size_min: 1
+        key: '[""|PK|FK:<model>]'
+        description: This is an example description of field.
+        index: True  # Boolean: Index model?
+  employees:
+    description: Placeholder
+    fields:
+      FIELD:
+        type: 'VARCHAR 100~ [<type> <limit>]'
+        size_max: 100
+        size_min: 1
+        key: '[""|PK|FK:<model>]'
+        description: Placeholder
+        index: True
+      FIELD:
+        type: 'VARCHAR 100~ [<type> <limit>]'
+        key: '[""|PK|FK:<model>]'
+        description: Placeholder
+        index: True

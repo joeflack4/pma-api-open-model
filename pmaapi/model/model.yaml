@@ -1,0 +1,344 @@
+# Model Specification. #
+open-model: '0.1.0'
+
+info:
+  title: PMA API
+  version: '0.1'
+
+# config:
+
+# <relations>:
+
+abstractModels:
+  resource:
+    description: Placeholder
+    fields:
+      id:
+        type: LONG
+        permissions: ''
+        key: PK
+        index: True
+        autoIncrement: True
+      createdOn:
+        type: 'VARCHAR 100~ [<type> <limit>]'
+        permissions: ''
+        key: '[""|PK|FK:<model>]'
+        description: Placeholder
+        index: True
+      createdBy:
+        type: 'VARCHAR 100~ [<type> <limit>]'
+        permissions: ''
+        key: '[""|PK|FK:<model>]'
+        description: Placeholder
+        index: True
+      updatedOn:
+        type: 'VARCHAR 100~ [<type> <limit>]'
+        permissions: ''
+        key: '[""|PK|FK:<model>]'
+        description: Placeholder
+        index: True
+      updatedBy:
+        type: 'VARCHAR 100~ [<type> <limit>]'
+        permissions: ''
+        key: '[""|PK|FK:<model>]'
+        description: Placeholder
+        index: True
+
+#      FIELD:
+#        type: VARCHAR
+#        size_max: 100
+#        size_min: 1
+#        key: '[ "" | PK |FK:<model> ]'
+#        description: This is an example description of field.
+#        index: True
+
+models:
+  indicators:
+    permissions: ''
+    description: Placeholder
+    <relations>: Preprocessed
+    fields:
+      name:
+        type: VARCHAR
+        size_max: 100
+        size_min: 1
+        key: '[ "" | PK |FK:<model> ]'
+        description: This is an example description of field.
+        index: True
+      label:
+        type: VARCHAR
+        size_max: 100
+        size_min: 1
+        key: '[ "" | PK |FK:<model> ]'
+        description: This is an example description of field.
+        index: True
+      order:
+        type: VARCHAR
+        size_max: 100
+        size_min: 1
+        key: '[ "" | PK |FK:<model> ]'
+        description: This is an example description of field.
+        index: True
+      type:
+        type: VARCHAR
+        size_max: 100
+        size_min: 1
+        key: '[ "" | PK |FK:<model> ]'
+        description: This is an example description of field.
+        index: True
+      definition:
+        type: VARCHAR
+        size_max: 100
+        size_min: 1
+        key: '[ "" | PK |FK:<model> ]'
+        description: This is an example description of field.
+        index: True
+      level1:
+        type: VARCHAR
+        size_max: 100
+        size_min: 1
+        key: '[ "" | PK |FK:<model> ]'
+        description: This is an example description of field.
+        index: True
+      level2:
+        type: VARCHAR
+        size_max: 100
+        size_min: 1
+        key: '[ "" | PK |FK:<model> ]'
+        description: This is an example description of field.
+        index: True
+      level3:
+        type: VARCHAR
+        size_max: 100
+        size_min: 1
+        key: '[ "" | PK |FK:<model> ]'
+        description: This is an example description of field.
+        index: True
+      denominator:
+        type: VARCHAR
+        size_max: 100
+        size_min: 1
+        key: '[ "" | PK |FK:<model> ]'
+        description: This is an example description of field.
+        index: True
+      measurementType:
+        type: VARCHAR
+        size_max: 100
+        size_min: 1
+        key: '[ "" | PK |FK:<model> ]'
+        description: This is an example description of field.
+        index: True
+      isFavorite:
+        type: VARCHAR
+        size_max: 100
+        size_min: 1
+        key: '[ "" | PK |FK:<model> ]'
+        description: This is an example description of field.
+        index: True
+      favoriteOrder:
+        type: VARCHAR
+        size_max: 100
+        size_min: 1
+        key: '[ "" | PK |FK:<model> ]'
+        description: This is an example description of field.
+        index: True
+
+#  characteristic_groups:
+#    permissions: ''
+#    description: Placeholder
+#    <relations>: Preprocessed
+#    fields:
+#      FIELD:
+#        type: 'VARCHAR 100~ [<type> <limit>]'
+#        key: '[""|PK|FK:<model>]'
+#        description: Placeholder
+#        index: True
+#      FIELD:
+#        type: 'VARCHAR 100~ [<type> <limit>]'
+#        key: '[""|PK|FK:<model>]'
+#        description: Placeholder
+#        index: True
+#  characteristics:
+#    permissions: ''
+#    description: Placeholder
+#    <relations>: Preprocessed
+#    fields:
+#      FIELD:
+#        type: 'VARCHAR 100~ [<type> <limit>]'
+#        key: '[""|PK|FK:<model>]'
+#        description: Placeholder
+#        index: True
+#      FIELD:
+#        type: 'VARCHAR 100~ [<type> <limit>]'
+#        key: '[""|PK|FK:<model>]'
+#        description: Placeholder
+#        index: True
+#  data:
+#    permissions: ''
+#    description: Placeholder
+#    <relations>: Preprocessed
+#    fields:
+#      value:
+#        type: REAL
+#        description: Placeholder
+#        index: True
+#      lowerCi:
+#        type: 'VARCHAR 100~ [<type> <limit>]'
+#        key: '[""|PK|FK:<model>]'
+#        description: Placeholder
+#        index: True
+#      upperCi:
+#        type: 'VARCHAR 100~ [<type> <limit>]'
+#        key: '[""|PK|FK:<model>]'
+#        description: Placeholder
+#        index: True
+#      levelCi:
+#        type: 'VARCHAR 100~ [<type> <limit>]'
+#        key: '[""|PK|FK:<model>]'
+#        description: Placeholder
+#        index: True
+#      precision:
+#        type: 'VARCHAR 100~ [<type> <limit>]'
+#        key: '[""|PK|FK:<model>]'
+#        description: Placeholder
+#        index: True
+#      isTotal:
+#        type: 'VARCHAR 100~ [<type> <limit>]'
+#        key: '[""|PK|FK:<model>]'
+#        description: Placeholder
+#        index: True
+#      denominatorWeighted:
+#        type: 'VARCHAR 100~ [<type> <limit>]'
+#        key: '[""|PK|FK:<model>]'
+#        description: Placeholder
+#        index: True
+#      denominatorUnweighted:
+#        type: 'VARCHAR 100~ [<type> <limit>]'
+#        key: '[""|PK|FK:<model>]'
+#        description: Placeholder
+#        index: True
+#  geographies:
+#    permissions: ''
+#    description: Placeholder
+#    <relations>: Preprocessed
+#    fields:
+#      FIELD:
+#        type: 'VARCHAR 100~ [<type> <limit>]'
+#        key: '[""|PK|FK:<model>]'
+#        description: Placeholder
+#        index: True
+#      FIELD:
+#        type: 'VARCHAR 100~ [<type> <limit>]'
+#        key: '[""|PK|FK:<model>]'
+#        description: Placeholder
+#        index: True
+#      FIELD:
+#        type: 'VARCHAR 100~ [<type> <limit>]'
+#        key: '[""|PK|FK:<model>]'
+#        description: Placeholder
+#        index: True
+#      FIELD:
+#        type: 'VARCHAR 100~ [<type> <limit>]'
+#        key: '[""|PK|FK:<model>]'
+#        description: Placeholder
+#        index: True
+#      FIELD:
+#        type: 'VARCHAR 100~ [<type> <limit>]'
+#        key: '[""|PK|FK:<model>]'
+#        description: Placeholder
+#        index: True
+#      FIELD:
+#        type: 'VARCHAR 100~ [<type> <limit>]'
+#        key: '[""|PK|FK:<model>]'
+#        description: Placeholder
+#        index: True
+#      FIELD:
+#        type: 'VARCHAR 100~ [<type> <limit>]'
+#        key: '[""|PK|FK:<model>]'
+#        description: Placeholder
+#        index: True
+#      FIELD:
+#        type: 'VARCHAR 100~ [<type> <limit>]'
+#        key: '[""|PK|FK:<model>]'
+#        description: Placeholder
+#        index: True
+#  surveys:
+#    permissions: ''
+#    description: Placeholder
+#    <relations>: Preprocessed
+#    fields:
+#      FIELD:
+#        type: 'VARCHAR 100~ [<type> <limit>]'
+#        key: '[""|PK|FK:<model>]'
+#        description: Placeholder
+#        index: True
+#      FIELD:
+#        type: 'VARCHAR 100~ [<type> <limit>]'
+#        key: '[""|PK|FK:<model>]'
+#        description: Placeholder
+#        index: True
+#      FIELD:
+#        type: 'VARCHAR 100~ [<type> <limit>]'
+#        key: '[""|PK|FK:<model>]'
+#        description: Placeholder
+#        index: True
+#      FIELD:
+#        type: 'VARCHAR 100~ [<type> <limit>]'
+#        key: '[""|PK|FK:<model>]'
+#        description: Placeholder
+#        index: True
+#      FIELD:
+#        type: 'VARCHAR 100~ [<type> <limit>]'
+#        key: '[""|PK|FK:<model>]'
+#        description: Placeholder
+#        index: True
+#      FIELD:
+#        type: 'VARCHAR 100~ [<type> <limit>]'
+#        key: '[""|PK|FK:<model>]'
+#        description: Placeholder
+#        index: True
+#      FIELD:
+#        type: 'VARCHAR 100~ [<type> <limit>]'
+#        key: '[""|PK|FK:<model>]'
+#        description: Placeholder
+#        index: True
+#  tags:
+#    permissions: ''
+#    description: Placeholder
+#    <relations>: Preprocessed
+#    fields:
+#      FIELD:
+#        type: 'VARCHAR 100~ [<type> <limit>]'
+#        key: '[""|PK|FK:<model>]'
+#        description: Placeholder
+#        index: True
+#      FIELD:
+#        type: 'VARCHAR 100~ [<type> <limit>]'
+#        key: '[""|PK|FK:<model>]'
+#        description: Placeholder
+#        index: True
+#      FIELD:
+#        type: 'VARCHAR 100~ [<type> <limit>]'
+#        key: '[""|PK|FK:<model>]'
+#        description: Placeholder
+#        index: True
+#  translations:
+#    permissions: ''
+#    description: Placeholder
+#    <relations>: Preprocessed
+#    fields:
+#      FIELD:
+#        type: 'VARCHAR 100~ [<type> <limit>]'
+#        key: '[""|PK|FK:<model>]'
+#        description: Placeholder
+#        index: True
+#      FIELD:
+#        type: 'VARCHAR 100~ [<type> <limit>]'
+#        key: '[""|PK|FK:<model>]'
+#        description: Placeholder
+#        index: True
+#      FIELD:
+#        type: 'VARCHAR 100~ [<type> <limit>]'
+#        key: '[""|PK|FK:<model>]'
+#        description: Placeholder
+#        index: True

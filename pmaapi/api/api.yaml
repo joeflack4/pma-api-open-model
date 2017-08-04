@@ -1,0 +1,132 @@
+# API Specification. #
+
+swagger: '2.0'
+info:
+  title: PMA API
+  version: '0.1'
+  x-package: pmaapi  #- Ideally root of all operationId's.
+  x-resource-dir: resources  #- Ideally sub-root of all operationId's.
+x-models:
+  <relations>: Pre-processed.
+  MODEL:
+    permissions: R* W* U* D* [*|#]
+    description: Placeholder.
+    <relations>: Pre-processed.
+    fields:
+      FIELD:
+        type: VARCHAR 100~ [<type> <limit>]
+        permissions: R* W* U* D* [*|#]
+        key: [''|PK|FK:<model>]
+        description: Placeholder.
+paths:
+  /indicators:
+    get:
+      #- Ideally inferred: 'x-package.x-resource-dir.<path>.<method>'.
+      operationId: pmaapi.resources.indicators.get
+      summary: Returns indicators.
+      responses:
+        200:
+          description: Successful response.
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: A list of indicators.
+  /data:
+    get:
+      operationId: pmaapi.resources.data.get
+      summary: Returns data.
+      responses:
+        200:
+          description: Successful response.
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: A list of data.
+  /characteristics:
+    get:
+      operationId: pmaapi.resources.characteristics.get
+      summary: Returns characteristics.
+      responses:
+        200:
+          description: Successful response.
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: A list of characteristics.
+  /characteristic_groups:
+    get:
+      operationId: pmaapi.resources.characteristic_groups.get
+      summary: Returns characteristic_groups.
+      responses:
+        200:
+          description: Successful response.
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: A list of characteristic_groups.
+  /surveys:
+    get:
+      operationId: pmaapi.resources.surveys.get
+      summary: Returns surveys.
+      responses:
+        200:
+          description: Successful response.
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: A list of surveys.
+  /geographies:
+    get:
+      operationId: pmaapi.resources.geographies.get
+      summary: Returns geographies.
+      responses:
+        200:
+          description: Successful response.
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: A list of geographies.
+  /translations:
+    get:
+      operationId: pmaapi.resources.translations.get
+      summary: Returns translations.
+      responses:
+        200:
+          description: Successful response.
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: A list of translations.
+  /tags:
+    get:
+      operationId: pmaapi.resources.tags.get
+      summary: Returns tags.
+      responses:
+        200:
+          description: Successful response.
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: A list of tags.
+# // put
+# // post
+# // delete
+# // options
+# // head
+# // patch
