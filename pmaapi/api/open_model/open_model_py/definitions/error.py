@@ -7,10 +7,15 @@ class OpenModelException(Exception):
 
 
 class UnexpectedException(OpenModelException):
-    """General Exception."""
+    """For exceptions that are unknown unknowns."""
     pass
 
 
 class UnsupportedFileTypeException(OpenModelException):
-    """General Exception."""
+    """If file type is unsupported."""
+    pass
+
+
+class UnimplementedFunctionalityException(OpenModelException):
+    """If functionality is not yet implemented."""
     pass
