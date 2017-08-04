@@ -6,11 +6,13 @@ from os.path import isfile
 from copy import copy
 from itertools import repeat as iter_repeat
 from yaml import load as yaml_load, YAMLError
-from pmaapi.config import MODEL_FILE, SUPPORTED_FILE_TYPES, \
-    PLANNED_SUPPORTED_FILE_TYPES
-from pmaapi.api.open_model_py.open_model_py.definitions.error \
-    import UnexpectedException, UnsupportedFileTypeException, \
-    UnimplementedFunctionalityException
+from pmaapi.config import MODEL_FILE, SUPPORTED_DATA_FORMATS, \
+    SUPPORTED_DATA_TYPES, PLANNED_SUPPORTED_FILE_TYPES
+from pmaapi.api.open_model.open_model_py.definitions.error \
+    import OpenModelException, UnsupportedFileTypeException, \
+    UnexpectedDataTypeException
+from pmaapi.api.open_model.open_model_py.definitions.abstractions \
+    import open_and_read
 
 
 class OpenModel:
@@ -22,24 +24,14 @@ class OpenModel:
         Arguments:
             source_data (dict): Source data in Python dictionary serialization.
         """
-        self.data, self.source_data, self.source_file_data, \
-            self.source_file_path, self.yaml, self.sqlalchemy, \
-            self.open_model_version, self.config, self.info, self.models, \
-            self.abstract_models, self.relations, self.custom_fields\
-            = iter_repeat(None, 13)
-        self.source = self.source_data
-        self.dict = self.data
-
-        if source_data:
-            # if file... # TODO
-            self.source_data = source_data
-            self.data = copy(self.source_data)
-            self.yaml, self.sqlalchemy = None, None  # TODO: Store data types.
-            self.source_file_data, self.source_file_path = None, None  # TODO
-
-            # self.dict = yaml.load(stream)
-            # self.yaml = ''  # TODO
-            # self.sqlalchemy = ''  # TODO
+        if not source_data:
+            self.data, self.source_data, self.source, self.source_file_data, \
+                self.source_file_path, self.dict, self.yaml, self.sqlalchemy, \
+                self.open_model_version, self.config, self.info, self.models, \
+                self.abstract_models, self.relations, self.custom_fields\
+                = iter_repeat(None, 15)
+        else:
+            self.load(source_data)
 
     def __iter__(self):
         """Returns dict with data as dict set as value to key 'open_model'."""
@@ -61,78 +53,79 @@ class OpenModel:
             else self.yaml
 
     def load(self, source_data):
-        """ksjflj"""
-        if isfile(source_data):
-            self._load_file(file=source_data)
-        else:
+        """Load source data.
+
+        The pathlib.PurePath class represents os.PathLike.
+
+        Raises:
+            UnexpectedDataTypeException
+        """
+        err_msg = 'UnexpectedDataTypeException: Unexpected data type.'
+        if type(source_data) in SUPPORTED_DATA_TYPES:
+            if isfile(source_data):
+                self._load_file(file=source_data)
+            else:
+                raise UnexpectedDataTypeException(err_msg)
+        elif type(source_data) is dict:
             self._load_serialized(data=source_data)
+        else:
+            raise UnexpectedDataTypeException(err_msg)
 
     def _load_file(self, file):
         """Loads file, and runs initialization in Python dictionary format.
 
         Side Effects:
             self.__init__: Initializes with source file data.
+            self.source_file_path, self.source_file_data: Set.
 
         Raises:
             UnexpectedException, UnsupportedFileTypeException
         """
-        exc1 = 'UnexpectedException: An unexpected error occurred.\n'
-        exc2 = 'UnsupportedFileTypeException: Apologies, but file type \'{}\''\
-               ' is not yet supported.'
-        exc3 = 'UnsupportedFileTypeException: File type \'{}\' is not ' \
-               'supported.'
+        file_ext = file.rpartition('.')[-1]
+        exc1 = 'YAMLError: An unexpected error occurred when attempting to ' \
+               'read supplied YAML.'
+        exc2 = 'UnsupportedDataFormatException: Apologies, but format \'{}\''\
+               ' is not yet supported.'.format(file_ext)
+        exc3 = 'UnsupportedDataFormatException: Format \'{}\' is not ' \
+               'supported.'.format(file_ext)
 
-        with open(file, 'r') as stream:
-            # print(copy(stream.read()))
-            self.source_file_data = str(copy(stream).read())
-            # self.source_file_data.write(stream.read())
+        if file_ext in SUPPORTED_DATA_FORMATS:
+            data = None
+            if file_ext == 'yaml':
+                try:
+                    data = yaml_load(open_and_read(file))
+                except YAMLError:
+                    raise YAMLError(exc1)
+            elif file_ext == 'json':  # Planned
+                pass
+            elif file_ext == 'xml':  # Planned
+                pass
+            elif file_ext == 'csv':  # Planned
+                pass
+            self.__init__(source_data=copy(data))
+            self.source_file_path = str(copy(file))
+            self.source_file_data = open_and_read(file)
+        elif file_ext in PLANNED_SUPPORTED_FILE_TYPES:
+            raise UnsupportedFileTypeException(exc2)
+        else:
+            raise UnsupportedFileTypeException(exc3)
 
-            # print(self.source_file_data)
-            # print(stream)
-
-
-            file_ext = stream.name.rpartition('.')[-1]
-            exc2, exc3 = exc2.format(file_ext), exc3.format(file_ext)
-            if file_ext in SUPPORTED_FILE_TYPES:
-                data = None
-                if file_ext == 'yaml':
-                    try:
-                        data = yaml_load(stream)
-                        stream.seek(0)  # Reset cursor so can be read again.
-                    except YAMLError:
-                        raise UnexpectedException(exc1)
-                elif file_ext == 'json':  # Planned
-                    pass
-                elif file_ext == 'xml':  # Planned
-                    pass
-                elif file_ext == 'csv':  # Planned
-                    pass
-                self.__init__(source_data=copy(data))
-                self.source_file_path = copy(file)
-                self.source_file_data = stream.read()
-
-                # print(self.source_file_data)
-
-            elif file_ext in PLANNED_SUPPORTED_FILE_TYPES:
-                raise UnsupportedFileTypeException(exc2)
-            else:
-                raise UnsupportedFileTypeException(exc3)
-
-    def _load_serialized(self, data):  # TODO
-        raise UnimplementedFunctionalityException(
-            'UnimplementedFunctionalityException: Loading from direct '
-            'serialization data format is not yet supported. Please load from'
-            'file.')
+    def _load_serialized(self, data):
+        self.source_data, self.source, self.data, self.dict \
+            = iter_repeat(copy(data), 4)
+        # self.yaml = ''  # TODO
+        # self.sqlalchemy = ''  # TODO
 
 
 if __name__ == '__main__':  # Testing
+    # TODO: Implement CLI and use file path as follows.
+    #   /Users/joeflack4/projects/pma-api/pmaapi/model/model.yaml
     try:
         model = OpenModel()
         model.load(MODEL_FILE)
-        print(model.dict)
+        # print(model.dict)
         # print(model.yaml)
         # print(model.sqlalchemy)
-        print(model.source_file_data)
-    except Exception as exc:
+    except OpenModelException as exc:
         print(exc, file=stderr)
     # pass
