@@ -1,13 +1,15 @@
 # Model Specification. #
-open-model: '0.1.0'
+baller: '0.1.0'
 
 info:
   title: PMA API
   version: '0.1'
 
-# config:
+config: ''
 
-# <relations>:
+relations: ''
+
+testCustomFields: ''
 
 abstractModels:
   resource:
