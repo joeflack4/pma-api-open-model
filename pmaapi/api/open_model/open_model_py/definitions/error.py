@@ -19,3 +19,8 @@ class UnsupportedFileTypeException(OpenModelException):
 class UnimplementedFunctionalityException(OpenModelException):
     """If functionality is not yet implemented."""
     pass
+
+
+class InvalidSchemaException(OpenModelException):
+    """If there is an error when trying to read the data model."""
+    pass
