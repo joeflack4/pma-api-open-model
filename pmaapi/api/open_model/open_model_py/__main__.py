@@ -5,18 +5,25 @@ from sys import stderr
 from os.path import isfile
 from copy import copy
 from itertools import repeat as iter_repeat
-from yaml import load as yaml_load, YAMLError
-from pmaapi.config import MODEL_FILE, SUPPORTED_DATA_FORMATS, \
-    SUPPORTED_DATA_TYPES, PLANNED_SUPPORTED_FILE_TYPES
+from pprint import PrettyPrinter
+from pmaapi.config import MODEL_FILE  # Testing
 from pmaapi.api.open_model.open_model_py.definitions.error \
     import OpenModelException, UnsupportedFileTypeException, \
-    UnexpectedDataTypeException
+    UnexpectedDataTypeException, InvalidSchemaException
 from pmaapi.api.open_model.open_model_py.definitions.abstractions \
-    import open_and_read
+    import read_contents, inverse_filter_dict, yaml_load_clean, yaml_dump_clean
 
 
 class OpenModel:
     """Open Model to SqlAlchemy"""
+
+    PLANNED_SUPPORTED_FILE_TYPES = ('csv', 'json', 'xml')
+    SUPPORTED_DATA_FORMATS = ('yaml',)
+    # from pathlib import PurePath  # - Disabled: Not supported in Python 2.
+    SUPPORTED_DATA_TYPES = (str, bytes, int)  # - Disabled: pathlib.PurePath
+    MODEL_ROOT_KEYS = \
+        ('baller', 'config', 'info', 'models', 'abstractModels', 'relations')
+    BRAND_NAME = 'OpenModel'
 
     def __init__(self, source_data=None):
         """Initialize.
@@ -60,7 +67,7 @@ class OpenModel:
             UnexpectedDataTypeException
         """
         err_msg = 'UnexpectedDataTypeException: Unexpected data type.'
-        if type(source_data) in SUPPORTED_DATA_TYPES:
+        if type(source_data) in OpenModel.SUPPORTED_DATA_TYPES:
             if isfile(source_data):
                 self._load_file(file=source_data)
             else:
@@ -81,20 +88,15 @@ class OpenModel:
             UnexpectedException, UnsupportedFileTypeException
         """
         file_ext = file.rpartition('.')[-1]
-        exc1 = 'YAMLError: An unexpected error occurred when attempting to ' \
-               'read supplied YAML.'
         exc2 = 'UnsupportedDataFormatException: Apologies, but format \'{}\''\
                ' is not yet supported.'.format(file_ext)
         exc3 = 'UnsupportedDataFormatException: Format \'{}\' is not ' \
                'supported.'.format(file_ext)
 
-        if file_ext in SUPPORTED_DATA_FORMATS:
+        if file_ext in OpenModel.SUPPORTED_DATA_FORMATS:
             data = None
             if file_ext == 'yaml':
-                try:
-                    data = yaml_load(open_and_read(file))
-                except YAMLError:
-                    raise YAMLError(exc1)
+                data = yaml_load_clean(file)
             elif file_ext == 'json':  # Planned
                 pass
             elif file_ext == 'xml':  # Planned
@@ -103,28 +105,48 @@ class OpenModel:
                 pass
             self.__init__(source_data=copy(data))
             self.source_file_path = str(copy(file))
-            self.source_file_data = open_and_read(file)
-        elif file_ext in PLANNED_SUPPORTED_FILE_TYPES:
+            self.source_file_data = read_contents(file)
+        elif file_ext in OpenModel.PLANNED_SUPPORTED_FILE_TYPES:
             raise UnsupportedFileTypeException(exc2)
         else:
             raise UnsupportedFileTypeException(exc3)
 
     def _load_serialized(self, data):
-        self.source_data, self.source, self.data, self.dict \
-            = iter_repeat(copy(data), 4)
-        # self.yaml = ''  # TODO
-        # self.sqlalchemy = ''  # TODO
+        # 1. Set data in dictionary format.
+        model, self.source_data, self.source, self.data, self.dict, \
+            = iter_repeat(copy(data), 5)
+        # 2. Set key model model meta-attribute properties.
+        try:
+            self.open_model_version, self.config, self.info, self.models, \
+                self.abstract_models, self.relations \
+                = model['baller'], model['config'], model['info'], \
+                model['models'], model['abstractModels'], model['relations']
+        except KeyError:
+            msg = 'InvalidSchemaException: An error occurred while attempting'\
+                  ' to read data model. Please checked that root keys conform'\
+                  ' to {} standard.'.format(OpenModel.BRAND_NAME)
+            raise InvalidSchemaException(msg)
+        self.custom_fields = {
+            'customFields': inverse_filter_dict(dictionary=model,
+                                                keys=OpenModel.MODEL_ROOT_KEYS)
+        }
+        # 3. Set data in yaml format.
+        self.yaml = yaml_dump_clean(self.dict)
+        # 4. Set data in SqlAlchemy format.
+        # self.sqlalchemy = ''  # TODO: Last to create.
 
 
 if __name__ == '__main__':  # Testing
     # TODO: Implement CLI and use file path as follows.
     #   /Users/joeflack4/projects/pma-api/pmaapi/model/model.yaml
+    pp = PrettyPrinter(indent=0)
     try:
-        model = OpenModel()
-        model.load(MODEL_FILE)
-        # print(model.dict)
+        mdl = OpenModel()
+        mdl.load(MODEL_FILE)
+        pp.pprint(mdl.custom_fields)
         # print(model.yaml)
         # print(model.sqlalchemy)
+        # pp.pprint(mdl.dict['models']['indicators'])
     except OpenModelException as exc:
         print(exc, file=stderr)
     # pass
