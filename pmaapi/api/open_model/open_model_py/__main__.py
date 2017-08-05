@@ -88,9 +88,9 @@ class OpenModel:
             UnexpectedException, UnsupportedFileTypeException
         """
         file_ext = file.rpartition('.')[-1]
-        exc2 = 'UnsupportedDataFormatException: Apologies, but format \'{}\''\
+        exc1 = 'UnsupportedDataFormatException: Apologies, but format \'{}\''\
                ' is not yet supported.'.format(file_ext)
-        exc3 = 'UnsupportedDataFormatException: Format \'{}\' is not ' \
+        exc2 = 'UnsupportedDataFormatException: Format \'{}\' is not ' \
                'supported.'.format(file_ext)
 
         if file_ext in OpenModel.SUPPORTED_DATA_FORMATS:
@@ -107,15 +107,23 @@ class OpenModel:
             self.source_file_path = str(copy(file))
             self.source_file_data = read_contents(file)
         elif file_ext in OpenModel.PLANNED_SUPPORTED_FILE_TYPES:
-            raise UnsupportedFileTypeException(exc2)
+            raise UnsupportedFileTypeException(exc1)
         else:
-            raise UnsupportedFileTypeException(exc3)
+            raise UnsupportedFileTypeException(exc2)
 
-    def _load_serialized(self, data):
-        # 1. Set data in dictionary format.
-        model, self.source_data, self.source, self.data, self.dict, \
-            = iter_repeat(copy(data), 5)
-        # 2. Set key model model meta-attribute properties.
+    def _set_meta_attributes(self, model):
+        """Set primary model meta-attribute properties.
+
+        OpenModel spec specifies that primary model meta-attributes keys reside
+        in the root of a hierarchical model.
+
+        Side Effects:
+            self.open_model_version, self.config, self.info, self.models,
+            self.abstract_models, self.relations
+
+        Raises:
+            InvalidSchemaException
+        """
         try:
             self.open_model_version, self.config, self.info, self.models, \
                 self.abstract_models, self.relations \
@@ -126,14 +134,71 @@ class OpenModel:
                   ' to read data model. Please checked that root keys conform'\
                   ' to {} standard.'.format(OpenModel.BRAND_NAME)
             raise InvalidSchemaException(msg)
+
+    def _set_custom_meta_attributes(self, model):
+        """Set custom primary meta attributes.
+
+        OpenModel spec specifies that primary model meta-attributes keys reside
+        in the root of a hierarchical model. Custom attributes are any
+        attributes in the model root which are not specified by the spec.
+
+        Side Effects:
+            self.custom_fields
+        """
         self.custom_fields = {
             'customFields': inverse_filter_dict(dictionary=model,
                                                 keys=OpenModel.MODEL_ROOT_KEYS)
         }
-        # 3. Set data in yaml format.
-        self.yaml = yaml_dump_clean(self.dict)
-        # 4. Set data in SqlAlchemy format.
-        # self.sqlalchemy = ''  # TODO: Last to create.
+
+    def _set_custom_fields(self, model):
+        """Alias: _set_custom_meta_attributes."""
+        self._set_custom_meta_attributes(model)
+
+    def _set_dict_format_attribute_aliases(self, data):
+        """Set dictionary format instance attributes.
+
+        Set dictionary format instance attribute self.dict and other instance
+        attribute aliases for that attribute.
+
+        Side Effects:
+            self.source_data, self.source, self.data, self.dict
+        """
+        self.source_data, self.source, self.data, self.dict, \
+            = iter_repeat(copy(data), 4)
+
+    def serialize_to_yaml(self, model):
+        """Serialize Python dictionary to YAML string.
+
+        Side Effects:
+            self.yaml
+        """
+        self.yaml = yaml_dump_clean(model)
+
+    def serialize_to_sqlalchemy(self, model):  # TODO: Last to create.
+        """Serialize Python dictionary to a dictionary of SqlAlchemy objects.
+
+        Side Effects:
+            self.sqlalchemy
+        """
+        self.sqlalchemy = model
+
+    def _load_serialized(self, data):
+        """Loads seralized data into instance.
+
+        Side Effects:
+            (1) Sets dictionary format instance attribute self.dict and other
+            instance attribute aliases for that attribute, (2) Sets custom
+            specified by the data but not understood by the OpenModel spec, (3)
+            Serializes Python dictionary to YAML string, (4) Serializes Python
+            dictionary to a dictionary of SqlAlchemy objects.
+
+        Raises:
+            UnexpectedException, UnsupportedFileTypeException
+        """
+        self._set_dict_format_attribute_aliases(copy(data))  # 1
+        self._set_custom_fields(copy(data))  # 2
+        self.serialize_to_yaml(copy(data))  # 3
+        self.serialize_to_sqlalchemy(copy(data))  # 4
 
 
 if __name__ == '__main__':  # Testing
@@ -143,9 +208,9 @@ if __name__ == '__main__':  # Testing
     try:
         mdl = OpenModel()
         mdl.load(MODEL_FILE)
-        pp.pprint(mdl.custom_fields)
-        # print(model.yaml)
-        # print(model.sqlalchemy)
+        print(mdl.sqlalchemy)
+        # pp.pprint(mdl.custom_fields)
+        # print(mdl.yaml)
         # pp.pprint(mdl.dict['models']['indicators'])
     except OpenModelException as exc:
         print(exc, file=stderr)
