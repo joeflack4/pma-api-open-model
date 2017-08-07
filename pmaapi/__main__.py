@@ -13,35 +13,75 @@ Some options for running:
  * <python> -m pmaapi
     - Python: Your interpreter, e.g. python, python3, etc.
 """
+import os
+import sys
 import connexion
+from pmaapi.config import DevelopmentConfig
+from werkzeug.utils import ImportStringError
+from pmaapi.definitions.error import PmaApiException
 
 
-def configuration():
+def _configure(connexion_app):
     """Configure app.
 
+    Args:
+        connexion_app (ConnexionApp): Unconfigured Flask Connexion application.
+
     Returns:
-        FlaskApp: Configured Flask application.
+        ConnexionApp: Configured Flask Connexion application.
+    """
+    # conf_app = app.add_api('api.yaml')  # TODO: Fix by conforming to spec.
+    app = connexion_app.app  # To get to Flask app.
+
+    try:
+        app.config.from_object(os.environ['APP_SETTINGS'])
+    except (KeyError, ModuleNotFoundError, ImportStringError):
+        app.config.from_object(DevelopmentConfig)
+    return connexion_app
+
+
+def create_app():
+    """Instantiate and configure app.
+
+    Returns:
+        ConnexionApp: Configured Connexion application. ConnexionApp.app is the
+        Flask application.
 
     """
-    # Ideally has: connexion.App(__name__, swagger_ui='docs')
-    flask_connexion_app = connexion.App(__name__, specification_dir='spec/')
-    flask_connexion_app.add_api('api.yaml')
-    return flask_connexion_app
+    # Ideally has: connexion.App(__name__, swagger_ui='docs'), but need to mess
+    # with connexion in order to fix that.
+    connexion_app = \
+        _configure(connexion.App(__name__, specification_dir='api/'))
+    return connexion_app
 
 
 def run(server):
     """Run app.
 
     Args:
-        server (FlaskApp): Configured Flask application.
+        server (ConnexionApp | FlaskApp): Configured application.
 
     Side effects:
-        server.run()
+        FlaskApp.run()
     """
     server.run(port=8080, debug=True)
 
 
-APP = configuration()
+APP = create_app()
+FLASK_APP = APP.app
+
 
 if __name__ == '__main__':
-    run(configuration())
+    def test_db():
+        """Test DB."""
+        from pmaapi.api.open_model.open_model_py.__main__ import db, add_module
+        db.create_all()
+        db.session.commit()
+
+        some_data = {'name': 'test'}
+        add_module(db, some_data)
+    try:
+        test_db()
+        # run(app)
+    except PmaApiException as err:
+        print(err, file=sys.stderr)
