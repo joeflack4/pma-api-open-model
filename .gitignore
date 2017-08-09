@@ -1,7 +1,10 @@
 # Project-based ignores
 .DS_Store
-.dev
+*.dev
 .idea
+test/files/ignored/*
+*/test/files/ignored/*
+*~$*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
