@@ -1,13 +1,20 @@
 # Model Specification. #
-open-model: '0.1.0'
+baller: '0.1.0'
 
 info:
   title: PMA API
   version: '0.1'
 
-# config:
+config:
+  defaults:
+    types:
+      VARCHAR:
+        size_max: 1000
+        size_min: 0
 
-# <relations>:
+relations: ''
+
+testCustomFields: ''
 
 abstractModels:
   resource:
@@ -25,6 +32,7 @@ abstractModels:
         key: '[""|PK|FK:<model>]'
         description: Placeholder
         index: True
+        default: now
       createdBy:
         type: 'VARCHAR 100~ [<type> <limit>]'
         permissions: ''
@@ -37,6 +45,7 @@ abstractModels:
         key: '[""|PK|FK:<model>]'
         description: Placeholder
         index: True
+        default: now
       updatedBy:
         type: 'VARCHAR 100~ [<type> <limit>]'
         permissions: ''
@@ -54,92 +63,117 @@ abstractModels:
 
 models:
   indicators:
+    super: abstractModels.resource
     permissions: ''
     description: Placeholder
     <relations>: Preprocessed
     fields:
       name:
-        type: VARCHAR
-        size_max: 100
-        size_min: 1
-        key: '[ "" | PK |FK:<model> ]'
+        type:
+          name: VARCHAR
+          props:
+            size_max: 100
+            size_min: 1
+        key: ''
         description: This is an example description of field.
         index: True
       label:
-        type: VARCHAR
-        size_max: 100
-        size_min: 1
-        key: '[ "" | PK |FK:<model> ]'
+        type:
+          name: VARCHAR
+          props:
+            size_max: 100
+            size_min: 1
+        key: ''
         description: This is an example description of field.
         index: True
       order:
-        type: VARCHAR
-        size_max: 100
-        size_min: 1
-        key: '[ "" | PK |FK:<model> ]'
+        type:
+          name: VARCHAR
+          props:
+            size_max: 100
+            size_min: 1
+        key: ''
         description: This is an example description of field.
         index: True
       type:
-        type: VARCHAR
-        size_max: 100
-        size_min: 1
-        key: '[ "" | PK |FK:<model> ]'
+        type:
+          name: VARCHAR
+          props:
+            size_max: 100
+            size_min: 1
+        key: ''
         description: This is an example description of field.
         index: True
       definition:
-        type: VARCHAR
-        size_max: 100
-        size_min: 1
-        key: '[ "" | PK |FK:<model> ]'
+        type:
+          name: VARCHAR
+          props:
+            size_max: 100
+            size_min: 1
+        key: ''
         description: This is an example description of field.
         index: True
       level1:
-        type: VARCHAR
-        size_max: 100
-        size_min: 1
-        key: '[ "" | PK |FK:<model> ]'
+        type:
+          name: VARCHAR
+          props:
+            size_max: 100
+            size_min: 1
+        key: ''
         description: This is an example description of field.
         index: True
       level2:
-        type: VARCHAR
-        size_max: 100
-        size_min: 1
-        key: '[ "" | PK |FK:<model> ]'
+        type:
+          name: VARCHAR
+          props:
+            size_max: 100
+            size_min: 1
+        key: ''
         description: This is an example description of field.
         index: True
       level3:
-        type: VARCHAR
-        size_max: 100
-        size_min: 1
-        key: '[ "" | PK |FK:<model> ]'
+        type:
+          name: VARCHAR
+          props:
+            size_max: 100
+            size_min: 1
+        key: ''
         description: This is an example description of field.
         index: True
       denominator:
-        type: VARCHAR
-        size_max: 100
-        size_min: 1
-        key: '[ "" | PK |FK:<model> ]'
+        type:
+          name: VARCHAR
+          props:
+            size_max: 100
+            size_min: 1
+        key: ''
         description: This is an example description of field.
         index: True
       measurementType:
-        type: VARCHAR
-        size_max: 100
-        size_min: 1
-        key: '[ "" | PK |FK:<model> ]'
+        type:
+          name: VARCHAR
+          props:
+            size_max: 100
+            size_min: 1
+        key: ''
         description: This is an example description of field.
         index: True
       isFavorite:
-        type: VARCHAR
-        size_max: 100
-        size_min: 1
-        key: '[ "" | PK |FK:<model> ]'
+        type:
+          name: VARCHAR
+          props:
+            size_max: 100
+            size_min: 1
+        key: ''
         description: This is an example description of field.
         index: True
       favoriteOrder:
-        type: VARCHAR
-        size_max: 100
-        size_min: 1
-        key: '[ "" | PK |FK:<model> ]'
+        type:
+          name: VARCHAR
+          props:
+            size_max: 100
+            size_min: 1
+        key: ''
         description: This is an example description of field.
         index: True
 
