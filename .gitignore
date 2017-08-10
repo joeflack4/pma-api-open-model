@@ -5,6 +5,7 @@
 test/files/ignored/*
 */test/files/ignored/*
 *~$*
+*.db
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
