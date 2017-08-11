@@ -191,7 +191,8 @@ class Translation(BaseModel):
     """A SqlAlchemy model class."""
     __tablename__ = 'translation'
 
-    id = copy(id_str)  # abbr
+    id = copy(id_int)
+    abbr = copy(indexable_required_nonunique_str)
     language = copy(indexable_required_nonunique_str)
     text = copy(indexable_required_nonunique_str)
     default = copy(optional_bool)
@@ -257,9 +258,8 @@ class Tag(BaseModel):
 if __name__ == '__main__':  # Testing
     try:
         # DB Testing
-        print(FLASK_APP.config['SQLALCHEMY_DATABASE_URI'])
         db.create_all()
         db.session.commit()
+        pass
     except DatabaseException as exc:
         print(exc, file=stderr)
-    # pass

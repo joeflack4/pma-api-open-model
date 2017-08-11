@@ -310,7 +310,7 @@ class OpenModel:
             'abstract_classes': [],  # TODO
             'uninherited_classes':
                 [_to_sqlalchemy_classdef_dict(name, defn)
-                 for name, defn in copy(model['models'].items())]
+                 for name, defn in model['models'].items()]
         }
 
         # pp = PrettyPrinter(indent=2)
@@ -321,7 +321,7 @@ class OpenModel:
         # db2.session.commit()
         # Testing
 
-        return _render_classes(copy(sqlalchemy_base_representations))
+        return _render_classes(sqlalchemy_base_representations)
         # TODO: Return a dictionary only. db.<whatever> can be done after.
 
     def _load_file(self, file):
@@ -441,7 +441,7 @@ if __name__ == '__main__':  # Testing
         mdl = OpenModel()
         mdl.load(MODEL_FILE)
         pp2 = PrettyPrinter(indent=0)
-        # print(mdl.sqlalchemy)
+        pp2.pprint(mdl.sqlalchemy)
         # print(mdl.yaml)
         # pp2.pprint(mdl.custom_fields)
         # pp2.pprint(mdl.dict['models']['indicators'])
@@ -452,8 +452,8 @@ if __name__ == '__main__':  # Testing
         # print(example.created_on)
 
         # Class Generation Teting
-        class_gen = AllMyFields({'a': 1, 'b': 2})
-        print(class_gen.a)
+        # class_gen = AllMyFields({'a': 1, 'b': 2})
+        # print(class_gen.a)
     except OpenModelException as exc:
         print(exc, file=stderr)
     # pass
