@@ -18,7 +18,7 @@ class Config(object):
     try:
         SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
     except KeyError:
-        SQLALCHEMY_DATABASE_URI = 'sqlite:///'+PACKAGE_ROOT+'/..pmaapi.db'
+        SQLALCHEMY_DATABASE_URI = 'sqlite:///'+PACKAGE_ROOT+'/../pmaapi.db'
 
 
 class ProductionConfig(Config):

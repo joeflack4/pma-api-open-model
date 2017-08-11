@@ -14,8 +14,8 @@ from pmaapi.definitions.error import DatabaseException
 # from pmaapi.definitions.error import raise_database_exception
 
 
-# db = SQLAlchemy(FLASK_APP)
-# db.Base = declarative_base()
+db = SQLAlchemy(FLASK_APP)
+db.Base = declarative_base()
 now = sqlalchemy_func.now
 
 
@@ -33,8 +33,8 @@ def get_current_user():
 # - TODO: Use unicode instead of string?
 # - TODO: Consider autoload to reflect table attributes from what is in DB.
 # SqlAlchemy ------------------------------------------------------------------
-# class BaseModel(db.Model):  # TODO: Set in UTC.
-class BaseModel(declarative_base()):  # TODO: Set in UTC.
+class BaseModel(db.Model):  # TODO: Set in UTC.
+# class BaseModel(declarative_base()):  # TODO: Set in UTC.
     """Base Model."""
     __abstract__ = True
 
@@ -54,8 +54,9 @@ class BaseModel(declarative_base()):  # TODO: Set in UTC.
 
 
 # TODO: Define which ones are FKs (key=?).
-db = SQLAlchemy(FLASK_APP)
-db.Base = BaseModel
+# db = SQLAlchemy(FLASK_APP)
+# db.Base = BaseModel
+
 # TODO: Will I need to use copy(), or is it ok just to refer to these?
 id_int = Column(BigInteger, primary_key=True, autoincrement=True, doc=None)
 id_str = Column(String(500), primary_key=True, nullable=False, index=True,
@@ -256,6 +257,7 @@ class Tag(BaseModel):
 if __name__ == '__main__':  # Testing
     try:
         # DB Testing
+        print(FLASK_APP.config['SQLALCHEMY_DATABASE_URI'])
         db.create_all()
         db.session.commit()
     except DatabaseException as exc:
