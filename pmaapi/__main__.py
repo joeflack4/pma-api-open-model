@@ -90,7 +90,7 @@ if __name__ == '__main__':
         """Create DB."""
         # from pmaapi.api.open_model.open_model_py.__main__ import db
         from flask_sqlalchemy import SQLAlchemy, declarative_base
-        from pmaapi.api.open_model.open_model_py.__main__ import OpenModel
+        from pmaapi.api.open_model_py.__main__ import OpenModel
         from pmaapi.config import MODEL_FILE
         db = SQLAlchemy(FLASK_APP)
         db.Base = declarative_base()
@@ -137,7 +137,7 @@ if __name__ == '__main__':
         # db.session.commit()
 
         # - Test OpenModel
-        from pmaapi.api.open_model.open_model_py.__main__ import OpenModel, \
+        from pmaapi.api.open_model_py.__main__ import OpenModel, \
             MODEL_FILE
         mdl = OpenModel()
         mdl.load(MODEL_FILE)

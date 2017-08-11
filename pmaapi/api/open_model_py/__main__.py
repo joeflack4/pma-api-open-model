@@ -12,14 +12,14 @@ from itertools import repeat as iter_repeat
 # from sqlalchemy.exc import ProgrammingError, IntegrityError
 # from sqlalchemy.sql.functions import func as sqlalchemy_func
 # from flask_sqlalchemy import SQLAlchemy
-from pmaapi.api.open_model.open_model_py.definitions.error \
+from pmaapi.api.open_model_py.definitions.error \
     import OpenModelException, UnsupportedFileTypeException, \
     UnexpectedDataTypeException, InvalidSchemaException, \
     UnimplementedFunctionalityException
-from pmaapi.api.open_model.open_model_py.definitions.abstractions \
+from pmaapi.api.open_model_py.definitions.abstractions \
     import read_contents, inverse_filter_dict, yaml_load_clean, \
     yaml_dump_clean
-from pmaapi.api.open_model.open_model_py.definitions.constants import MAPPINGS
+from pmaapi.api.open_model_py.definitions.constants import MAPPINGS
 # from pmaapi.__main__ import FLASK_APP
 # from pmaapi.definitions.error import raise_database_exception
 
@@ -308,8 +308,9 @@ class OpenModel:
 
         sqlalchemy_base_representations = {
             'abstract_classes': [],  # TODO
-            'uninherited_classes': [_to_sqlalchemy_classdef_dict(name, defn)
-                                    for name, defn in model['models'].items()]
+            'uninherited_classes':
+                [_to_sqlalchemy_classdef_dict(name, defn)
+                 for name, defn in model['models'].items()]
         }
 
         # pp = PrettyPrinter(indent=2)
@@ -440,7 +441,7 @@ if __name__ == '__main__':  # Testing
         mdl = OpenModel()
         mdl.load(MODEL_FILE)
         pp2 = PrettyPrinter(indent=0)
-        # print(mdl.sqlalchemy)
+        pp2.pprint(mdl.sqlalchemy)
         # print(mdl.yaml)
         # pp2.pprint(mdl.custom_fields)
         # pp2.pprint(mdl.dict['models']['indicators'])
@@ -451,8 +452,8 @@ if __name__ == '__main__':  # Testing
         # print(example.created_on)
 
         # Class Generation Teting
-        class_gen = AllMyFields({'a': 1, 'b': 2})
-        print(class_gen.a)
+        # class_gen = AllMyFields({'a': 1, 'b': 2})
+        # print(class_gen.a)
     except OpenModelException as exc:
         print(exc, file=stderr)
     # pass

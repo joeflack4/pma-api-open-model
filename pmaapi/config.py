@@ -15,7 +15,10 @@ class Config(object):
     CSRF_ENABLED = True
     WTF_CSRF_ENABLED = True
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
+    try:
+        SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
+    except KeyError:
+        SQLALCHEMY_DATABASE_URI = 'sqlite:///'+PACKAGE_ROOT+'/../pmaapi.db'
 
 
 class ProductionConfig(Config):
