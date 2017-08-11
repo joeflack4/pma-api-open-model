@@ -12,14 +12,14 @@ from itertools import repeat as iter_repeat
 # from sqlalchemy.exc import ProgrammingError, IntegrityError
 # from sqlalchemy.sql.functions import func as sqlalchemy_func
 # from flask_sqlalchemy import SQLAlchemy
-from pmaapi.api.open_model.open_model_py.definitions.error \
+from pmaapi.api.open_model_py.definitions.error \
     import OpenModelException, UnsupportedFileTypeException, \
     UnexpectedDataTypeException, InvalidSchemaException, \
     UnimplementedFunctionalityException
-from pmaapi.api.open_model.open_model_py.definitions.abstractions \
+from pmaapi.api.open_model_py.definitions.abstractions \
     import read_contents, inverse_filter_dict, yaml_load_clean, \
     yaml_dump_clean
-from pmaapi.api.open_model.open_model_py.definitions.constants import MAPPINGS
+from pmaapi.api.open_model_py.definitions.constants import MAPPINGS
 # from pmaapi.__main__ import FLASK_APP
 # from pmaapi.definitions.error import raise_database_exception
 
