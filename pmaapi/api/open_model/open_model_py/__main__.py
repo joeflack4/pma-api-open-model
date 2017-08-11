@@ -308,8 +308,9 @@ class OpenModel:
 
         sqlalchemy_base_representations = {
             'abstract_classes': [],  # TODO
-            'uninherited_classes': [_to_sqlalchemy_classdef_dict(name, defn)
-                                    for name, defn in model['models'].items()]
+            'uninherited_classes':
+                [_to_sqlalchemy_classdef_dict(name, defn)
+                 for name, defn in copy(model['models'].items())]
         }
 
         # pp = PrettyPrinter(indent=2)
@@ -320,7 +321,7 @@ class OpenModel:
         # db2.session.commit()
         # Testing
 
-        return _render_classes(sqlalchemy_base_representations)
+        return _render_classes(copy(sqlalchemy_base_representations))
         # TODO: Return a dictionary only. db.<whatever> can be done after.
 
     def _load_file(self, file):
