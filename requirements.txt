@@ -27,6 +27,6 @@ snowballstemmer==1.2.1
 SQLAlchemy==1.1.12
 swagger-spec-validator==2.1.0
 typing==3.6.1
-urllib3==1.21.1
+urllib3==1.26.5
 Werkzeug==0.12.2
 wrapt==1.10.10
